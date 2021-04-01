@@ -25,6 +25,10 @@
       </div>
     </nav>
     <section class="m-4">
+      <% if flash[:notice] %>
+       <p><%= flash[:notice] %></p>
+      <% end %>
+      <% debug cart %>
       <%= yield %>
     </section>
   </body>

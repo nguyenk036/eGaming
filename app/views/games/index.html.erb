@@ -22,8 +22,15 @@
         <td><%= game.metascore %></td>
         <td><%= game.price %></td>
         <td><%= link_to 'Show', game %></td>
-        <td><%= link_to 'Edit', edit_game_path(game) %></td>
-        <td><%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <% if cart.include?(game) %>
+            <%= link_to 'Remove from Cart', cart_path(game), method: :delete %>
+          <% else %>
+            <% form_with url: cart_index_path, method: :post %>
+              <%= hidden_field_tag(:game_id, game.id) %>
+              <%= link_to 'Add to Cart' %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

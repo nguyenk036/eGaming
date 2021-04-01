@@ -1,6 +1,6 @@
 class CartController < ApplicationController
   def create
-    id = params[:id].to_i
+    id = params[:game_id].to_i
     session[:cart] << id
     game = Game.find(id)
 
@@ -10,7 +10,7 @@ class CartController < ApplicationController
   end
 
   def destroy
-    id = params[:id].to_i
+    id = params[:game_id].to_i
     session[:cart].delete(id)
     game = Game.find(id)
 
