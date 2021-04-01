@@ -4,7 +4,7 @@ class CreateGames < ActiveRecord::Migration[6.1]
       t.string :title
       t.references :developer, null: false, foreign_key: true
       t.references :genre, null: false, foreign_key: true
-      t.int :metascore
+      t.integer :metascore
       t.float :price
 
       t.timestamps

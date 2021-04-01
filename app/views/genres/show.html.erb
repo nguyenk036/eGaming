@@ -1,9 +1,3 @@
-<p id="notice"><%= notice %></p>
+<% content_for (:html_title) { @genre.title } %>
 
-<p>
-  <strong>Title:</strong>
-  <%= @genre.title %>
-</p>
-
-<%= link_to 'Edit', edit_genre_path(@genre) %> |
-<%= link_to 'Back', genres_path %>
+<%= render partial: 'genre', object: @genre, locals: { show_link: false } %>

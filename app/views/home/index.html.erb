@@ -1,0 +1,13 @@
+<h1>eGaming</h1>
+<h3>Games</h3>
+<ol>
+  <% @games.each do |g| %>
+  <li><%= link_to g.title, g %> </li>
+  <% end %>
+</ol>
+<h3>Genres</h3>
+<ol>
+  <% @genres.each do |genre| %>
+  <li><%= link_to genre.title, genre %> </li>
+  <% end %>
+</ol>

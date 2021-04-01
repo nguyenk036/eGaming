@@ -19,7 +19,6 @@
       <tr>
         <td><%= game.title %></td>
         <td><%= game.developer_id %></td>
-        <td><%= game.genre_id %></td>
         <td><%= game.metascore %></td>
         <td><%= game.price %></td>
         <td><%= link_to 'Show', game %></td>
@@ -32,4 +31,6 @@
 
 <br>
 
-<%= link_to 'New Game', new_game_path %>
+<div>
+  <%= paginate @games %>
+</div>

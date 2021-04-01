@@ -3,7 +3,7 @@ class CreateGameOrders < ActiveRecord::Migration[6.1]
     create_table :game_orders do |t|
       t.references :game, null: false, foreign_key: true
       t.references :order, null: false, foreign_key: true
-      t.int :quantity
+      t.integer :quantity
       t.float :price
 
       t.timestamps

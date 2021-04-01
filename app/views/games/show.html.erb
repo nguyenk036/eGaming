@@ -12,7 +12,9 @@
 
 <p>
   <strong>Genre:</strong>
-  <%= @game.genre_id %>
+  <% @game.genres.each do |genre| %>
+  <%= link_to genre.title, genre_path(genre.id) %>
+  <% end %>
 </p>
 
 <p>
