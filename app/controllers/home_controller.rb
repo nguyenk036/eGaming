@@ -4,4 +4,8 @@ class HomeController < ApplicationController
 
     @genres = Genre.limit(10)
   end
+
+  def show
+    @game = Game.find(params[:id])
+  end
 end

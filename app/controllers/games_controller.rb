@@ -56,6 +56,11 @@ class GamesController < ApplicationController
     end
   end
 
+  def remove_foreign_keys
+    @game_order = GameOrder.where(game_id: :id).delete_all
+    @game_genre = GameGenre.where(game_id: :id).delete_all
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

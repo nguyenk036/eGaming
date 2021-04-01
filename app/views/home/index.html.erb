@@ -1,10 +1,17 @@
 <h1>eGaming</h1>
 <h3>Games</h3>
-<ol>
+<div class="d-flex justify-content-center flex-wrap">
   <% @games.each do |g| %>
-  <li><%= link_to g.title, g %> </li>
+    <div class="card m-2" style="width: 18rem;">
+      <%# <img class="card-img-top" src="..." alt="Card image cap"> %>
+      <div class="card-body">
+        <h5 class="card-title"><%= link_to g.title, g %></h5>
+        <p class="card-text"><%= g.developer.name %></p>
+      </div>
+    </div>
   <% end %>
-</ol>
+</div>
+
 <h3>Genres</h3>
 <ol>
   <% @genres.each do |genre| %>

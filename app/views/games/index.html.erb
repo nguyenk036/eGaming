@@ -18,7 +18,7 @@
     <% @games.each do |game| %>
       <tr>
         <td><%= game.title %></td>
-        <td><%= game.developer_id %></td>
+        <td><%= game.developer.name %></td>
         <td><%= game.metascore %></td>
         <td><%= game.price %></td>
         <td><%= link_to 'Show', game %></td>

@@ -1,0 +1,25 @@
+<h1 class="my-3 display-4">
+  <%= @game.title%>
+</h1>
+
+<div>
+  <div>
+    <p>Developer : <%= @game.developer.name %></p>
+  </div>
+  <div>
+    <p>Metascore: <%= @game.metascore %> </p>
+  </div>
+  <div>
+    <p>Price: <%= @game.price %></p>
+  </div>
+  <div>
+    <p>Genres:</p>
+    <div>
+      <p>
+        <% @game.genres.each do |genre| %>
+        <%= link_to genre.title, genre_path(genre.id), class: "text-decoration-none" %>
+        <% end %>
+      </p>
+    </div>
+  </div>
+</div>
