@@ -1,11 +1,4 @@
 
-<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample">
-  Cart
-  <% if cart.present? %>
-    <sup><%= cart.size %></sup>
-  <% end %>
-</button>
-
 <div class="collapse" id="collapseExample">
   <div class="card card-body">
     <% if cart.present? %>

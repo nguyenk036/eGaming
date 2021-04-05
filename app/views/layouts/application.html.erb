@@ -23,12 +23,43 @@
           <%= link_to "Genres", genres_path, class: "nav-item nav-link" %>
         </div>
       </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ms-auto">
+          <% if user_signed_in? %>
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                <%= link_to "Edit Profile", edit_user_registration_path, class: "nav-item nav-link ms-auto" %>
+              </li>
+              <li>
+                <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "nav-item nav-link ms-auto" %>
+              </li>
+            </ul>
+          <% else %>
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                <%= link_to "Sign Up", new_user_registration_path, class: "nav-item nav-link ms-auto" %>
+              </li>
+              <li>
+                <%= link_to "Login", new_user_session_path, class: "nav-item nav-link ms-auto" %>
+              </li>
+            </ul>
+          <% end %>
+          <button type="button" class="btn btn-primary">
+            Cart
+            <% if cart.present? %>
+              <span class="badge bg-info"><%= cart.size %></span>
+            <% end %>
+          </button>
+        </ul>
+      </div>
     </nav>
     <section class="m-4">
-      <% if flash[:notice] %>
-       <p><%= flash[:notice] %></p>
+      <% if notice %>
+        <p class="alert alert-success"><%= notice %></p>
       <% end %>
-      <% debug cart %>
+      <% if alert %>
+        <p class="alert alert-danger"><%= alert %></p>
+      <% end %>
       <%= yield %>
     </section>
   </body>
