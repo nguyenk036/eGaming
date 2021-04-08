@@ -1,10 +1,7 @@
 <h1>Genres</h1>
 
   <% @genres.each do |genre| %>
-      <h3><%= genre.title %></h3>
-      <% genre.games.each do |game| %>
-        <p><%= link_to game.title, game, class: "text-decoration-none" %></p>
-      <% end %>
+      <h3><%= link_to genre.title.upcase, genre, class: "text-decoration-none" %></h3>
   <% end %>
 
 

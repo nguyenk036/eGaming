@@ -8,4 +8,8 @@ class Game < ApplicationRecord
   has_many :orders, through: :game_orders
 
   belongs_to :developer
+
+  validates :title, uniqueness: true, presence: true
+  validates :meatscore, numericality: { only_integer: true }
+  validates :price, numericality: true
 end
