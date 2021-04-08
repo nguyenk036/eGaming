@@ -22,8 +22,9 @@
         <h5 class="card-title"><%= link_to g.title, g %></h5>
         <p class="card-text"><%= g.developer.name %></p>
         <% if cart.include?(g) %>
-          <%= button_to cart_path(g), method: :delete do %>
-            Remove from Cart
+          <%= form_with url: cart_path(g), method: :delete do %>
+            <%= hidden_field_tag(:game_id, g.id) %>
+            <%= button_tag 'Delete from Cart' %>
           <% end %>
         <% else %>
           <!-- Begin Form -->
