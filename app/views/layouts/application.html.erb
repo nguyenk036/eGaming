@@ -50,6 +50,10 @@
               <span class="badge bg-info"><%= cart.size %></span>
             <% end %>
           </button>
+          <%= form_tag(games_path, method: :get, class: "d-flex mx-2") do %>
+            <%= text_field_tag(:search, params[:search], class: "form-control me-2", placeholder: "Search games...") %>
+            <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
+          <% end %>
         </ul>
       </div>
     </nav>

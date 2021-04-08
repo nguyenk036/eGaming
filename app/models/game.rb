@@ -12,4 +12,18 @@ class Game < ApplicationRecord
   validates :title, uniqueness: true, presence: true
   validates :meatscore, numericality: { only_integer: true }
   validates :price, numericality: true
+
+  def self.search(search)
+    if search
+      game = where("LOWER(games.title) LIKE ?", "#{search.downcase}%")
+
+      if game
+        game = where("LOWER(games.title) LIKE ?", "#{search.downcase}%")
+      else
+        Game.all
+      end
+    else
+      Game.all
+    end
+  end
 end
