@@ -36,6 +36,11 @@
     <%= f.text_field :postal_code, autocomplete: "postal-code" %>
   </div>
 
+  <div class="field">
+    <%= f.label :province %><br />
+    <%= f.collection_select :province_id, Province.all, :id, :code, { :prompt => 'Select a Province', :selected => @user.province_id }, { class: 'form-control' } %>
+  </div>
+
   <div class="actions">
     <%= f.submit "Sign up" %>
   </div>

@@ -42,6 +42,11 @@
   </div>
 
   <div class="field">
+    <%= f.label :province %><br />
+    <%= f.collection_select :province_id, Province.all, :id, :code, { :prompt => 'Select a Province', :selected => @user.province_id }, { class: 'form-control' } %>
+  </div>
+
+  <div class="field">
     <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
     <%= f.password_field :current_password, autocomplete: "current-password" %>
   </div>
