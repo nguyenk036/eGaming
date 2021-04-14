@@ -1,0 +1,27 @@
+<h1 class="display-2">Checkout</h1>
+
+<% if cart.present? %>
+  <table class="table table-dark table-hover">
+    <tr>
+      <td>Game</td>
+      <td class="text-end">Price</td>
+      <td class="text-end">Quantity</td>
+      <td></td>
+    </tr>
+    <% cart.each do |game| %>
+      <tr>
+        <td><%= game.title %></td>
+        <td class="text-end"><%= game.price %></td>
+        <td class="text-end">1</td>
+        <td class="text-end">
+          <%= form_with url: cart_path(game), method: :delete do %>
+            <%= hidden_field_tag(:game_id, game.id) %>
+            <%= button_tag 'Delete from Cart' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <h1 class="display-6">There are no items in your cart.</h1>
+<% end %>

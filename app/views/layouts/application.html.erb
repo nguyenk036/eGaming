@@ -44,12 +44,7 @@
               </li>
             </ul>
           <% end %>
-          <button type="button" class="btn btn-primary">
-            Cart
-            <% if cart.present? %>
-              <span class="badge bg-info"><%= cart.size %></span>
-            <% end %>
-          </button>
+          <%= link_to "Cart", checkout_index_path, class: "btn btn-primary text-decoration-none" %>
         </ul>
       </div>
     </nav>
