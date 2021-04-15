@@ -1,6 +1,7 @@
 <h1 class="display-2">Checkout</h1>
 
 <% if cart.present? %>
+<div class="table-responsive">
   <table class="table table-dark table-hover">
     <tr>
       <td>Game</td>
@@ -10,18 +11,65 @@
     </tr>
     <% cart.each do |game| %>
       <tr>
-        <td><%= game.title %></td>
-        <td class="text-end"><%= game.price %></td>
-        <td class="text-end">1</td>
+        <td><%= game[0].title %></td>
+        <td class="text-end"><%= game[0].price %></td>
+        <td class="text-end d-flex justify-content-end">
+          <%= game[1] %>
+          <%= form_with url: cart_increment_path(game), method: :increment do %>
+              <%= hidden_field_tag(:cart_id, game[0].id) %>
+              <%= button_tag '+', class: "btn-sm btn-secondary mx-1 my-1" %>
+          <% end %>
+          <% if game[1] > 1 %>
+            <%= form_with url: cart_decrement_path(game), method: :decrement do %>
+                <%= hidden_field_tag(:cart_id, game[0].id) %>
+                <%= button_tag '-', class: "btn-sm btn-secondary mx-1 my-1"  %>
+            <% end %>
+          <% end %>
+        </td>
         <td class="text-end">
           <%= form_with url: cart_path(game), method: :delete do %>
-            <%= hidden_field_tag(:game_id, game.id) %>
+            <%= hidden_field_tag(:game_id, game[0].id) %>
             <%= button_tag 'Delete from Cart' %>
           <% end %>
         </td>
       </tr>
     <% end %>
+    <tfoot>
+      <tr>
+        <td class="text-end">Subtotal</td>
+        <td class="text-end"><%= @subtotal %> </td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td class="text-end">Taxes</td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td class="text-end">PST/HST</td>
+        <td class="text-end"><%= sprintf("%.2f", @pst) %></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <% if @user_province != "NS" %>
+      <tr>
+        <td class="text-end">GST</td>
+        <td class="text-end"><%= sprintf("%.2f", @gst) %></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <% end %>
+      <tr>
+        <td class="text-end">Total</td>
+        <td class="text-end"><%= sprintf("%.2f", @total) %> </td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tfoot>
   </table>
+</div>
 <% else %>
   <h1 class="display-6">There are no items in your cart.</h1>
 <% end %>

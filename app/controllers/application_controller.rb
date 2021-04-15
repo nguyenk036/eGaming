@@ -26,6 +26,13 @@ class ApplicationController < ActionController::Base
   end
 
   def cart
-    Game.find(session[:cart])
+    cart ||= []
+
+    session[:cart].each do |game_array|
+      game = Game.find(game_array[0])
+      cart << [game, game_array[1]]
+    end
+
+    cart
   end
 end
