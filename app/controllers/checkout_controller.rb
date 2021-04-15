@@ -1,8 +1,8 @@
 class CheckoutController < ApplicationController
   before_action :authenticate_user!
 
-  def create
-    nil
+  def new
+    @order = Order.new
   end
 
   def index

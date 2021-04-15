@@ -1,11 +1,11 @@
 <h1 class="display-2">Checkout</h1>
 
 <% if cart.present? %>
-  <%= form_with do |f| %>
+  <%= form_with(model: @order) do |f| %>
     <h1 class="display-6 my-3">Your Details</h1>
     <div class="field">
       <%= f.label :address, class: "form-label" %><br />
-      <%= f.text_field :address, autocomplete: "user.address", class: "form-control min-vw-25 w-50" %>
+      <%= f.text_field :address, autocomplete: @user.address, class: "form-control min-vw-25 w-50" %>
     </div>
 
     <div class="field">
