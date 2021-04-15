@@ -1,7 +1,7 @@
 <h1>Games</h1>
-<%# <% form_tag games_path, method: :get, id: :filter, do %>
-  <%# <%= collection_select :genre, :id, Genres.all.order('title ASC'), :id, :title, {include_blank: 'Select Genre'} %> %>
-<%# <% end %> %> %>
+<% form_tag games_path, method: :get, id: :filter %>
+  <%= collection_select :genre, :id, Genres.all.order('title ASC'), :id, :title, {include_blank: 'Select Genre'} %>
+<% end %>
 
 <table>
   <thead>
