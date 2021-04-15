@@ -1,11 +1,16 @@
 class CheckoutController < ApplicationController
   before_action :authenticate_user!
 
+  def create
+    nil
+  end
+
   def index
     @subtotal = 0
     @pst_rate = Province.find(current_user.province_id).PST
     @gst_rate = 0.05
     @user_province = Province.find(current_user.province_id).code
+    @user = current_user
 
     cart.each do |game|
       @subtotal += game[0].price * game[1]
