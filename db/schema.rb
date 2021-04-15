@@ -10,8 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_15_044828) do
-
+# ActiveRecord::Schema.define(version: 2021_04_15_044828) do
+ActiveRecord::Schema.define(version: 20_210_415_160_313) do
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -35,22 +35,14 @@ ActiveRecord::Schema.define(version: 2021_04_15_044828) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_admin_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
+    t.index ["reset_password_token"], name:   "index_admin_users_on_reset_password_token",
+                                      unique: true
   end
 
   create_table "developers", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "game_genres", force: :cascade do |t|
-    t.integer "game_id", null: false
-    t.integer "genre_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["game_id"], name: "index_game_genres_on_game_id"
-    t.index ["genre_id"], name: "index_game_genres_on_genre_id"
   end
 
   create_table "game_orders", force: :cascade do |t|
@@ -73,7 +65,9 @@ ActiveRecord::Schema.define(version: 2021_04_15_044828) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "developer_id", null: false
+    t.integer "genre_id", null: false
     t.index ["developer_id"], name: "index_games_on_developer_id"
+    t.index ["genre_id"], name: "index_games_on_genre_id"
   end
 
   create_table "genres", force: :cascade do |t|
@@ -122,11 +116,10 @@ ActiveRecord::Schema.define(version: 2021_04_15_044828) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "game_genres", "games"
-  add_foreign_key "game_genres", "genres"
   add_foreign_key "game_orders", "games"
   add_foreign_key "game_orders", "orders"
   add_foreign_key "games", "developers"
+  add_foreign_key "games", "genres"
   add_foreign_key "orders", "games"
   add_foreign_key "orders", "provinces"
   add_foreign_key "orders", "users"

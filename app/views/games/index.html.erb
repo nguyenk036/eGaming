@@ -1,11 +1,15 @@
 <h1>Games</h1>
 
+<%= form_tag(games_path, method: :get) do %>
+  <%= collection_select :genre, :id, Genre.where(id: @genres_searched).order('title ASC'), :id, :title, {prompt: 'Filter by genre...'}, { class: 'form-control mb-3'} %>
+  <%= hidden_field_tag(:search, params[:search])%>
+  <button type="submit">Filter</button>
+<% end %>
 <table>
   <thead>
     <tr>
       <th>Title</th>
       <th>Developer</th>
-      <th>Genre</th>
       <th>Metascore</th>
       <th>Price</th>
       <th colspan="3"></th>

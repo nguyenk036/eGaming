@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 require "faker"
 
-GameGenre.delete_all
+# GameGenre.delete_all
 GameOrder.delete_all
 Game.delete_all
 Genre.delete_all
@@ -20,20 +20,16 @@ User.delete_all
     name: Faker::Name.name
   )
 
-  game = Game.find_or_create_by(
-    title:     Faker::Game.title,
-    developer: dev,
-    metascore: 99,
-    price:     9.99
-  )
-
   gen = Genre.find_or_create_by(
     title: Faker::Game.genre
   )
 
-  GameGenre.find_or_create_by(
-    game:  game,
-    genre: gen
+  game = Game.find_or_create_by(
+    title:     Faker::Game.title,
+    developer: dev,
+    metascore: 99,
+    price:     9.99,
+    genre:     gen
   )
 end
 

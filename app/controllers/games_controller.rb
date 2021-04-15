@@ -3,7 +3,14 @@ class GamesController < ApplicationController
 
   # GET /games or /games.json
   def index
-    @games = Game.all.page(params[:page])
+    @games = Game.search(params[:search], params[:genre]).page(params[:page])
+    @genres_searched ||= []
+
+    @games.each_with_index do |g, index|
+      @genres_searched[index] = g.genre_id
+    end
+
+    @genres = Genre.all
   end
 
   # GET /games/1 or /games/1.json
