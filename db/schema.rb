@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_05_012552) do
+ActiveRecord::Schema.define(version: 2021_04_15_160313) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -44,15 +44,6 @@ ActiveRecord::Schema.define(version: 2021_04_05_012552) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "game_genres", force: :cascade do |t|
-    t.integer "game_id", null: false
-    t.integer "genre_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["game_id"], name: "index_game_genres_on_game_id"
-    t.index ["genre_id"], name: "index_game_genres_on_genre_id"
-  end
-
   create_table "game_orders", force: :cascade do |t|
     t.integer "game_id", null: false
     t.integer "order_id", null: false
@@ -73,7 +64,9 @@ ActiveRecord::Schema.define(version: 2021_04_05_012552) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "developer_id", null: false
+    t.integer "genre_id", null: false
     t.index ["developer_id"], name: "index_games_on_developer_id"
+    t.index ["genre_id"], name: "index_games_on_genre_id"
   end
 
   create_table "genres", force: :cascade do |t|
@@ -85,14 +78,24 @@ ActiveRecord::Schema.define(version: 2021_04_05_012552) do
   create_table "orders", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "game_id", null: false
-    t.date "date"
     t.float "paid_amount"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.float "PST"
-    t.float "GST"
+    t.string "address"
+    t.string "city"
+    t.string "postal_code"
+    t.integer "province_id", null: false
     t.index ["game_id"], name: "index_orders_on_game_id"
+    t.index ["province_id"], name: "index_orders_on_province_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
+  create_table "provinces", force: :cascade do |t|
+    t.string "name"
+    t.float "PST"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "code"
   end
 
   create_table "users", force: :cascade do |t|
@@ -103,15 +106,21 @@ ActiveRecord::Schema.define(version: 2021_04_05_012552) do
     t.datetime "remember_created_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "address"
+    t.string "city"
+    t.string "postal_code"
+    t.integer "province_id", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["province_id"], name: "index_users_on_province_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "game_genres", "games"
-  add_foreign_key "game_genres", "genres"
   add_foreign_key "game_orders", "games"
   add_foreign_key "game_orders", "orders"
   add_foreign_key "games", "developers"
+  add_foreign_key "games", "genres"
   add_foreign_key "orders", "games"
+  add_foreign_key "orders", "provinces"
   add_foreign_key "orders", "users"
+  add_foreign_key "users", "provinces"
 end
