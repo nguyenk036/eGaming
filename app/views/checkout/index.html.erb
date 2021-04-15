@@ -37,7 +37,7 @@
     <tfoot>
       <tr>
         <td class="text-end">Subtotal</td>
-        <td class="text-end"><%= @subtotal %> </td>
+        <td class="text-end"><%= sprintf("%.2f", @subtotal) %> </td>
         <td></td>
         <td></td>
       </tr>
@@ -53,14 +53,12 @@
         <td></td>
         <td></td>
       </tr>
-      <% if @user_province != "NS" %>
       <tr>
         <td class="text-end">GST</td>
         <td class="text-end"><%= sprintf("%.2f", @gst) %></td>
         <td></td>
         <td></td>
       </tr>
-      <% end %>
       <tr>
         <td class="text-end">Total</td>
         <td class="text-end"><%= sprintf("%.2f", @total) %> </td>
