@@ -28,23 +28,23 @@
           <% if user_signed_in? %>
             <ul class="navbar-nav ms-auto">
               <li class="nav-item">
-                <%= link_to "Edit Profile", edit_user_registration_path, class: "nav-item nav-link ms-auto" %>
+                <%= link_to "Edit Profile", edit_user_registration_path, class: "nav-item nav-link ms-auto btn-sm btn-primary m-1 text-white text-decoration-none" %>
               </li>
               <li>
-                <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "nav-item nav-link ms-auto" %>
+                <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "nav-item nav-link ms-auto btn-sm btn-primary m-1 text-white text-decoration-none" %>
               </li>
             </ul>
           <% else %>
             <ul class="navbar-nav ms-auto">
               <li class="nav-item">
-                <%= link_to "Sign Up", new_user_registration_path, class: "nav-item nav-link ms-auto" %>
+                <%= link_to "Sign Up", new_user_registration_path, class: "nav-item nav-link ms-auto btn-sm btn-primary m-1 text-white text-decoration-none" %>
               </li>
               <li>
-                <%= link_to "Login", new_user_session_path, class: "nav-item nav-link ms-auto" %>
+                <%= link_to "Login", new_user_session_path, class: "nav-item nav-link ms-auto btn-sm btn-primary m-1 text-white text-decoration-none" %>
               </li>
             </ul>
           <% end %>
-          <%= link_to "Cart", checkout_index_path, class: "btn btn-primary text-decoration-none" %>
+          <%= link_to "Cart", checkout_index_path, class: "btn btn-primary nav-item nav-link text-decoration-none text-white" %>
           <%= form_tag(games_path, method: :get, class: "d-flex mx-2") do %>
             <%= text_field_tag(:search, params[:search], class: "form-control me-2", placeholder: "Search games...") %>
             <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>

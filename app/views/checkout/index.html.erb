@@ -38,16 +38,18 @@
             <td><%= game[0].title %></td>
             <td class="text-end"><%= game[0].price %></td>
             <td class="text-end d-flex justify-content-end">
-              <%= game[1] %>
-              <%= form_with url: cart_increment_path(game), method: :increment do %>
-                  <%= hidden_field_tag(:cart_id, game[0].id) %>
-                  <%= button_tag '+', class: "btn-sm btn-secondary mx-1 my-1" %>
-              <% end %>
               <% if game[1] > 1 %>
                 <%= form_with url: cart_decrement_path(game), method: :decrement do %>
                     <%= hidden_field_tag(:cart_id, game[0].id) %>
                     <%= button_tag '-', class: "btn-sm btn-secondary mx-1 my-1"  %>
                 <% end %>
+              <% end %>
+              <div class="m-1">
+                <%= game[1] %>
+              </div>
+              <%= form_with url: cart_increment_path(game), method: :increment do %>
+                  <%= hidden_field_tag(:cart_id, game[0].id) %>
+                  <%= button_tag '+', class: "btn-sm btn-secondary mx-1 my-1" %>
               <% end %>
             </td>
             <td class="text-end">
