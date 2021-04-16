@@ -26,13 +26,13 @@ class ApplicationController < ActionController::Base
   end
 
   def cart
-    cart ||= []
+    shopping_cart = []
 
     session[:cart].each do |game_array|
       game = Game.find(game_array[0])
-      cart << [game, game_array[1]]
+      shopping_cart << [game, game_array[1]]
     end
 
-    cart
+    shopping_cart
   end
 end
