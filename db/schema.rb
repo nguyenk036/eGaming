@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_20_174456) do
+ActiveRecord::Schema.define(version: 2021_04_20_192440) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -84,7 +84,8 @@ ActiveRecord::Schema.define(version: 2021_04_20_174456) do
     t.string "city"
     t.string "postal_code"
     t.integer "province_id", null: false
-    t.integer "stripe_payment_id"
+    t.string "stripe_payment_id"
+    t.boolean "paid"
     t.index ["province_id"], name: "index_orders_on_province_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end

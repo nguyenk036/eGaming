@@ -6,68 +6,57 @@ class OrdersController < ApplicationController
     @orders = Order.all
   end
 
-  # GET /orders/1 or /orders/1.json
-  def show; end
-
-  # GET /orders/new
-  def new
-    @order = Order.new
-  end
-
-  # GET /orders/1/edit
-  def edit; end
-
   # POST /orders or /orders.json
   def create
     @user = current_user
-    @game_order = nil
-    @order = Order.create(
+    @successful_game_order = false
+
+    @order = Order.new(
       user_id:           @user.id,
-      paid_amount:       params[:paid_amount],
+      paid_amount:       params[:paid_amount].to_f,
       address:           @user.address,
       city:              @user.city,
       postal_code:       @user.postal_code,
       province_id:       @user.province_id,
-      stripe_payment_id: params[:stripe_payment_id]
+      stripe_payment_id: params[:stripe_payment_id],
+      paid:              params[:paid]
     )
 
     if @order&.valid?
+      @order.save
+
       cart.each do |game|
-        @game_order = GameOrder.create(
+        @game_order = @order.game_orders.create(
           game_id:  game[0].id,
-          order_id: @order,
           quantity: game[1],
           price:    game[0].price,
-          PST:      @user.province_id.PST
+          PST:      Province.find(@user.province_id).PST
         )
+
+        @successful_game_order = @game_order&.valid?
       end
     end
 
-    if @order&.valid? && !@game_order.nil?
+    if @successful_game_order != false
       flash[:notice] = "Order successfully placed!"
 
       session[:cart] = []
 
-      redirect_to root
+      redirect_to :root
     else
-      flash[:notice] = "Something went wrong with the order placement process :("
+      flash[:notice] = "Something went wrong :("
 
       redirect_to checkout_index_path
     end
   end
 
-  # PATCH/PUT /orders/1 or /orders/1.json
-  def update; end
-
-  # DELETE /orders/1 or /orders/1.json
-  def destroy; end
-
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_order
     @order = Order.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
+  def order_params
+    params.permit(:paid_amount, :stripe_payment_id, :paid)
+  end
 end
