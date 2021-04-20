@@ -1,27 +1,31 @@
 <h1 class="display-2">Checkout</h1>
 
 <% if cart.present? %>
-  <%= form_with(model: @order) do |f| %>
-    <h1 class="display-6 my-3">Your Details</h1>
-    <div class="field">
-      <%= f.label :address, class: "form-label" %><br />
-      <%= f.text_field :address, autocomplete: @user.address, class: "form-control min-vw-25 w-50" %>
-    </div>
+  <% if !@user.province_id.present? || !@user.address.present? || !@user.postal_code.present? || !@user.city.present?%>
+    <%= form_with url: checkout_path(@user.id, :id, :address, :postal, :city), method: :put do |f| %>
+      <h1 class="display-6 my-3">Your Details</h1>
+      <div class="field">
+        <%= f.label :address, class: "form-label" %><br />
+        <%= f.text_field :address, class: "form-control min-vw-25 w-50", value: @user.address %>
+      </div>
 
-    <div class="field">
-      <%= f.label :city %><br />
-      <%= f.text_field :city, autocomplete: "city", class: "form-control min-vw-25 w-50" %>
-    </div>
+      <div class="field">
+        <%= f.label :city %><br />
+        <%= f.text_field :city, autocomplete: "city", class: "form-control min-vw-25 w-50", value: @user.city %>
+      </div>
 
-    <div class="field">
-      <%= f.label :postal_code %><br />
-      <%= f.text_field :postal_code, autocomplete: "postal-code", class: "form-control min-vw-25 w-50" %>
-    </div>
+      <div class="field">
+        <%= f.label :postal_code %><br />
+        <%= f.text_field :postal_code, autocomplete: "postal-code", class: "form-control min-vw-25 w-50", value: @user.postal_code %>
+      </div>
 
-    <div class="field">
-      <%= f.label :province %><br />
-      <%= f.collection_select :province_id, Province.all, :id, :code, { :prompt => 'Select a Province', :selected => @user.province_id }, { class: 'form-control min-vw-10 w-25' } %>
-    </div>
+      <div class="field">
+        <%= f.label :province %><br />
+        <%= f.collection_select :province_id, Province.all, :id, :code, { :prompt => 'Select a Province', :selected => @user.province_id }, { class: 'form-control min-vw-10 w-25' } %>
+      </div>
+
+      <%= button_tag 'Update' %>
+    <% end %>
   <% end %>
     <h1 class="display-6 my-3">Order Summary</h1>
 
@@ -38,6 +42,7 @@
             <td><%= game[0].title %></td>
             <td class="text-end"><%= game[0].price %></td>
             <td class="text-end d-flex justify-content-end">
+              <!-- Show decrement button if qty is greater than 1 -->
               <% if game[1] > 1 %>
                 <%= form_with url: cart_decrement_path(game), method: :decrement do %>
                     <%= hidden_field_tag(:cart_id, game[0].id) %>
@@ -93,6 +98,8 @@
           </tr>
         </tfoot>
       </table>
+
+      <%= button_to 'Submit Order', { :controller => 'checkout', :action => 'create' }, { method: :post, remote: true } %>
     </div>
 <% else %>
   <h1 class="display-6">There are no items in your cart.</h1>
