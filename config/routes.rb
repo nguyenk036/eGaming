@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     post "increment"
     post "decrement"
   end
-  resources :checkout
+  resources :checkout, only: %i[index update create success]
 
   scope "/checkout" do
     post "create", to: "checkout#create", as: "checkout_create"

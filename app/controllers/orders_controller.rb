@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :set_order, only: %i[ show edit update destroy ]
+  before_action :set_order, only: %i[show edit update destroy]
 
   # GET /orders or /orders.json
   def index
@@ -7,8 +7,7 @@ class OrdersController < ApplicationController
   end
 
   # GET /orders/1 or /orders/1.json
-  def show
-  end
+  def show; end
 
   # GET /orders/new
   def new
@@ -16,54 +15,59 @@ class OrdersController < ApplicationController
   end
 
   # GET /orders/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /orders or /orders.json
   def create
-    @order = Order.new(order_params)
+    @user = current_user
+    @game_order = nil
+    @order = Order.create(
+      user_id:           @user.id,
+      paid_amount:       params[:paid_amount],
+      address:           @user.address,
+      city:              @user.city,
+      postal_code:       @user.postal_code,
+      province_id:       @user.province_id,
+      stripe_payment_id: params[:stripe_payment_id]
+    )
 
-    respond_to do |format|
-      if @order.save
-        format.html { redirect_to @order, notice: "Order was successfully created." }
-        format.json { render :show, status: :created, location: @order }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @order.errors, status: :unprocessable_entity }
+    if @order&.valid?
+      cart.each do |game|
+        @game_order = GameOrder.create(
+          game_id:  game[0].id,
+          order_id: @order,
+          quantity: game[1],
+          price:    game[0].price,
+          PST:      @user.province_id.PST
+        )
       end
+    end
+
+    if @order&.valid? && !@game_order.nil?
+      flash[:notice] = "Order successfully placed!"
+
+      session[:cart] = []
+
+      redirect_to root
+    else
+      flash[:notice] = "Something went wrong with the order placement process :("
+
+      redirect_to checkout_index_path
     end
   end
 
   # PATCH/PUT /orders/1 or /orders/1.json
-  def update
-    respond_to do |format|
-      if @order.update(order_params)
-        format.html { redirect_to @order, notice: "Order was successfully updated." }
-        format.json { render :show, status: :ok, location: @order }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @order.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  def update; end
 
   # DELETE /orders/1 or /orders/1.json
-  def destroy
-    @order.destroy
-    respond_to do |format|
-      format.html { redirect_to orders_url, notice: "Order was successfully destroyed." }
-      format.json { head :no_content }
-    end
-  end
+  def destroy; end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_order
-      @order = Order.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def order_params
-      params.require(:order).permit(:user_id, :game_id, :date, :paid_amount)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_order
+    @order = Order.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
 end

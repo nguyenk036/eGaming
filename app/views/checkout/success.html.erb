@@ -1,0 +1,6 @@
+<h1 class="display-3">Stripe payment completed!  </h1>
+
+<h3><%= @payment_intent.id %></h3>
+<h3><%= @payment_intent.charges.data[0].paid %></h3>
+
+<%= button_to "Complete your order", { controller: "orders", action: "create", stripe_payment_id: @payment_intent.id, paid_amount: @payment_intent.charges.data[0].paid } %>
