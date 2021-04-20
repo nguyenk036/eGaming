@@ -99,7 +99,7 @@
         </tfoot>
       </table>
 
-      <%= button_to 'Submit Order', { :controller => 'checkout', :action => 'create' }, { method: :post, remote: true } %>
+      <%= button_to 'Submit Order', { controller: 'checkout', action: 'create', pst: :pst, gst: :gst }, { method: :post, remote: true } %>
     </div>
 <% else %>
   <h1 class="display-6">There are no items in your cart.</h1>
