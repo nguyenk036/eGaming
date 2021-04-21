@@ -1,24 +1,38 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>User:</strong>
-  <%= @order.user_id %>
-</p>
+<h1 class="display-6">Order Details</h1>
 
 <p>
-  <strong>Game:</strong>
-  <%= @order.game_id %>
+  <strong>Order placed on:</strong>
+  <%= @order.created_at.to_date %>
 </p>
 
-<p>
-  <strong>Date:</strong>
-  <%= @order.date %>
-</p>
+<strong>Ordered Games</strong>
+<table class="table table-dark table-hover">
+  <thead>
+    <tr>
+      <th>Game</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>PST/HST</th>
+      <th>GST</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @order.game_orders.each do |g| %>
+      <tr>
+        <td><%= Game.find(g.id).title %></td>
+        <td><%= g.price %></td>
+        <td><%= g.quantity %></td>
+        <td><%= sprintf("%.2f", g.price * g.PST) %></td>
+        <td><%= sprintf("%.2f", g.price * g.GST) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
 <p>
-  <strong>Paid amount:</strong>
+  <strong>Total:</strong>
   <%= @order.paid_amount %>
 </p>
-
-<%= link_to 'Edit', edit_order_path(@order) %> |
-<%= link_to 'Back', orders_path %>

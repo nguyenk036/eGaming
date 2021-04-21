@@ -4,7 +4,7 @@ class CheckoutController < ApplicationController
   def index
     @subtotal = 0
     @pst_rate = Province.find(current_user.province_id).PST
-    @gst_rate = 0.05
+    @gst_rate = Province.find(current_user.province_id).GST
     @user_province = Province.find(current_user.province_id).code
     @user = current_user
 
@@ -12,23 +12,12 @@ class CheckoutController < ApplicationController
       @subtotal += game[0].price * game[1]
     end
 
-    @pst = if @pst_rate.nil?
-             0
-           else
-             @subtotal * @pst_rate
-           end
-
-    @gst = if %w[NB NL NS ON PE].include? @user_province
-             0
-           else
-             @subtotal * @gst_rate
-           end
-
+    @pst = @subtotal * @pst_rate
+    @gst = @subtotal * @gst_rate
     @total = @subtotal + @gst + @pst
   end
 
   def update
-    logger.debug(user_params)
     @user = User.find_by(id: current_user.id)
     @user.update(user_params)
     redirect_to checkout_index_path
@@ -38,7 +27,7 @@ class CheckoutController < ApplicationController
     cart_items = []
     @subtotal = 0
     @pst_rate = Province.find(current_user.province_id).PST
-    @gst_rate = 0.05
+    @gst_rate = Province.find(current_user.province_id).GST
     @user_province = Province.find(current_user.province_id).code
     @user = current_user
 
@@ -46,17 +35,8 @@ class CheckoutController < ApplicationController
       @subtotal += game[0].price * game[1]
     end
 
-    @pst = if @pst_rate.nil?
-             0
-           else
-             @subtotal * @pst_rate
-           end
-
-    @gst = if %w[NB NL NS ON PE].include? @user_province
-             0
-           else
-             @subtotal * @gst_rate
-           end
+    @pst = @subtotal * @pst_rate
+    @gst = @subtotal * @gst_rate
 
     session[:cart].each do |game|
       cart_items << { name:     Game.find(game[0]).title,
@@ -87,16 +67,13 @@ class CheckoutController < ApplicationController
     )
 
     respond_to do |format|
-      format.js # render app/views/checkout/create.js.erb
+      format.js
     end
   end
 
   def success
     @session = Stripe::Checkout::Session.retrieve(params[:session_id])
     @payment_intent = Stripe::PaymentIntent.retrieve(@session.payment_intent)
-    # @payment_intent_id = Stripe::PaymentIntent.retrieve(@session.payment_intent.id)
-    # @payment_amount_received = Stripe::PaymentIntent.retrieve(@session.payment_intent.original_values.payment_amount_received)
-    # @payment_paid = Stripe::PaymentIntent.retrieve(@session.payment_intent.original_values.charges.data.paid)
   end
 
   def cancel

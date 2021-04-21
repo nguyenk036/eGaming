@@ -1,12 +1,14 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: %i[show edit update destroy]
 
-  # GET /orders or /orders.json
   def index
-    @orders = Order.all
+    @orders = Order.where(user_id: current_user.id)
   end
 
-  # POST /orders or /orders.json
+  def show
+    @order = Order.find(params[:id])
+  end
+
   def create
     @user = current_user
     @successful_game_order = false
@@ -30,7 +32,8 @@ class OrdersController < ApplicationController
           game_id:  game[0].id,
           quantity: game[1],
           price:    game[0].price,
-          PST:      Province.find(@user.province_id).PST
+          PST:      Province.find(@user.province_id).PST,
+          GST:      Province.find(@user.province_id).GST
         )
 
         @successful_game_order = @game_order&.valid?
@@ -39,7 +42,6 @@ class OrdersController < ApplicationController
 
     if @successful_game_order != false
       flash[:notice] = "Order successfully placed!"
-
       session[:cart] = []
 
       redirect_to :root

@@ -6,4 +6,6 @@ class Order < ApplicationRecord
 
   validates :paid_amount, presence: true
   validates :paid_amount, numericality: true
+
+  def self.province_name(id); end
 end
