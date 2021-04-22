@@ -4,7 +4,7 @@ ActiveAdmin.register Order do
   show do
     attributes_table do
       row :id
-      row :user_id
+      row :user
       row :paid_amount
       row :created_at
       row :address
@@ -14,6 +14,7 @@ ActiveAdmin.register Order do
       row :stripe_payment_id
       row :paid
       row :games
+      row :game_orders
     end
   end
 end

@@ -30,7 +30,7 @@
     <h1 class="display-6 my-3">Order Summary</h1>
 
     <div class="table-responsive">
-      <table class="table table-dark table-hover">
+      <table class="table table-hover">
         <tr>
           <td>Game</td>
           <td class="text-end">Price</td>
@@ -60,7 +60,7 @@
             <td class="text-end">
               <%= form_with url: cart_path(game), method: :delete do %>
                 <%= hidden_field_tag(:game_id, game[0].id) %>
-                <%= button_tag 'Delete from Cart' %>
+                <%= button_tag 'Delete from Cart', class: "btn-sm" %>
               <% end %>
             </td>
           </tr>

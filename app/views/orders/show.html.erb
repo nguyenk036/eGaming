@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1 class="display-6">Order Details</h1>
+<h1 class="display-4 text-center">Order Details</h1>
 
 <p>
   <strong>Order placed on:</strong>
@@ -8,7 +8,7 @@
 </p>
 
 <strong>Ordered Games</strong>
-<table class="table table-dark table-hover">
+<table class="table table-hover">
   <thead>
     <tr>
       <th>Game</th>
@@ -22,7 +22,7 @@
   <tbody>
     <% @order.game_orders.each do |g| %>
       <tr>
-        <td><%= Game.find(g.id).title %></td>
+        <td><%= link_to Game.find(g.id).title, game_path(g), class: "text-decoration-none" %></td>
         <td><%= g.price %></td>
         <td><%= g.quantity %></td>
         <td><%= sprintf("%.2f", g.price * g.PST) %></td>

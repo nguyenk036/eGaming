@@ -1,4 +1,4 @@
-<h1>Games</h1>
+<h1 class="display-2 text-center">Games</h1>
 
 <%= form_tag(games_path, method: :get) do %>
   <%= collection_select :genre, :id, Genre.where(id: @genres_searched).order('title ASC'), :id, :title, {prompt: 'Filter by genre...'}, { class: 'form-control mb-3 w-25', onchange: 'this.form.submit();' } %>

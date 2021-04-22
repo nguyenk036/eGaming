@@ -1,7 +1,7 @@
 class Order < ApplicationRecord
   belongs_to :user
 
-  has_many :game_orders
+  has_many :game_orders, dependent: :delete_all
   has_many :games, through: :game_orders
 
   validates :paid_amount, presence: true

@@ -13,28 +13,29 @@
   </div>
 </div>
 
-<h3>Games</h3>
-<div class="d-flex justify-content-center flex-wrap">
-  <% @games_limit.each do |g| %>
-    <div class="card m-2" style="width: 18rem;">
-      <%# <img class="card-img-top" src="..." alt="Card image cap"> %>
-      <div class="card-body">
-        <h5 class="card-title"><%= link_to g.title, g %></h5>
-        <p class="card-text"><%= g.developer.name %></p>
+<h1 class="display-3 text-center">Our Catalog</h3>
+<div class="container">
+  <div class="row">
+    <% @games_limit.each do |g| %>
+      <div class="card m-2" style="width: 18rem;">
+        <div class="card-body">
+          <h1 class="card-title display-6"><%= link_to g.title, g, class: "text-decoration-none" %></h5>
+          <p class="card-text"><%= g.developer.name %></p>
 
-          <% if cart.select{ |el| el[0] == g }.map{ |el| el[0] }.include?(g) %>
-            <%= form_with url: cart_path(g), method: :delete do %>
-              <%= hidden_field_tag(:game_id, g.id) %>
-              <%= button_tag 'Delete from Cart' %>
+            <% if cart.select{ |el| el[0] == g }.map{ |el| el[0] }.include?(g) %>
+              <%= form_with url: cart_path(g), method: :delete do %>
+                <%= hidden_field_tag(:game_id, g.id) %>
+                <%= button_tag 'Delete from Cart', class: "btn btn-secondary" %>
+              <% end %>
+            <% else %>
+              <!-- Begin Form -->
+              <%= form_with url: cart_index_path, method: :post do %>
+                <%= hidden_field_tag(:game_id, g.id) %>
+                <%= button_tag 'Add to Cart', class: "btn btn-secondary" %>
+              <% end %>
             <% end %>
-          <% else %>
-            <!-- Begin Form -->
-            <%= form_with url: cart_index_path, method: :post do %>
-              <%= hidden_field_tag(:game_id, g.id) %>
-              <%= button_tag 'Add to Cart' %>
-            <% end %>
-          <% end %>
+        </div>
       </div>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
 </div>

@@ -19,36 +19,39 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <%= link_to "Home", root_path, class: "nav-item nav-link" %>
-          <%= link_to "Games", games_path, class: "nav-item nav-link" %>
-          <%= link_to "Genres", genres_path, class: "nav-item nav-link" %>
+          <%= link_to "Home", root_path, class: "nav-item nav-link text-decoration-none" %>
+          <%= link_to "Games", games_path, class: "nav-item nav-link text-decoration-none" %>
+          <%= link_to "Genres", genres_path, class: "nav-item nav-link text-decoration-none" %>
         </div>
       </div>
       <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ms-auto">
           <% if user_signed_in? %>
             <ul class="navbar-nav ms-auto">
-              <li class="nav-item">
-                <%= link_to "Order History", orders_path, class: "nav-item nav-link ms-auto btn-sm btn-primary m-1 text-white text-decoration-none" %>
+              <li>
+                <%= link_to "Admin Console", "/admin", class: "nav-item nav-link ms-auto btn-sm btn-secondary m-1 text-white text-decoration-none" %>
               </li>
               <li class="nav-item">
-                <%= link_to "Edit Profile", edit_user_registration_path, class: "nav-item nav-link ms-auto btn-sm btn-primary m-1 text-white text-decoration-none" %>
+                <%= link_to "Order History", orders_path, class: "nav-item nav-link ms-auto btn-sm btn-secondary m-1 text-white text-decoration-none" %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "Edit Profile", edit_user_registration_path, class: "nav-item nav-link ms-auto btn-sm btn-secondary m-1 text-white text-decoration-none" %>
               </li>
               <li>
-                <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "nav-item nav-link ms-auto btn-sm btn-primary m-1 text-white text-decoration-none" %>
+                <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "nav-item nav-link ms-auto btn-sm btn-secondary m-1 text-white text-decoration-none" %>
               </li>
             </ul>
           <% else %>
             <ul class="navbar-nav ms-auto">
               <li class="nav-item">
-                <%= link_to "Sign Up", new_user_registration_path, class: "nav-item nav-link ms-auto btn-sm btn-primary m-1 text-white text-decoration-none" %>
+                <%= link_to "Sign Up", new_user_registration_path, class: "nav-item nav-link ms-auto btn-sm btn-secondary m-1 text-white text-decoration-none" %>
               </li>
               <li>
-                <%= link_to "Login", new_user_session_path, class: "nav-item nav-link ms-auto btn-sm btn-primary m-1 text-white text-decoration-none" %>
+                <%= link_to "Login", new_user_session_path, class: "nav-item nav-link ms-auto btn-sm btn-secondary m-1 text-white text-decoration-none" %>
               </li>
             </ul>
           <% end %>
-          <%= link_to "Cart", checkout_index_path, class: "btn btn-primary nav-item nav-link text-decoration-none text-white" %>
+          <%= link_to "Cart <span class='badge bg-info'>#{cart.count}</span>".html_safe, checkout_index_path, class: "btn btn-secondary nav-item nav-link text-decoration-none text-white" %>
           <%= form_tag(games_path, method: :get, class: "d-flex mx-2") do %>
             <%= text_field_tag(:search, params[:search], class: "form-control me-2", placeholder: "Search games...") %>
             <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>

@@ -13,13 +13,9 @@
     <p>Price: <%= @game.price %></p>
   </div>
   <div>
-    <p>Genres:</p>
+    <p>Genre:</p>
     <div>
-      <p>
-        <% @game.genres.each do |genre| %>
-        <%= link_to genre.title, genre_path(genre.id), class: "text-decoration-none" %>
-        <% end %>
-      </p>
+      <%= @game.genre.title %>
     </div>
   </div>
 </div>
